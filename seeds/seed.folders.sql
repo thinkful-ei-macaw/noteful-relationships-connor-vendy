@@ -1,6 +1,6 @@
 INSERT INTO folders 
-(folderId, folderName )
+( folder_name )
 VALUES
-(1, 'Spangley'),
-(2, 'Super'),
-(3, 'Important')
+('Spangley'),
+('Super'),
+('Important')
