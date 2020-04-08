@@ -24,7 +24,7 @@ foldersRouter
     const requiredFields = { folder_name };
     // check for missing fields
     const missingFields = Object.entries(requiredFields)
-    //item[0] is like key item[1] is like the value
+    // item[0] is like key item[1] is like the value
       .filter((item) => item[1] === undefined)
       .map((item) => item[0]);//item[0], just takes the keys 
     if (missingFields.length > 0) {

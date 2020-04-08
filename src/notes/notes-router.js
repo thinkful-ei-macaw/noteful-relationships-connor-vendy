@@ -2,8 +2,7 @@ const express = require("express");
 const NotesService = require("./notes-service");
 const jsonParser = express.json();
 const notesRouter = express.Router();
-const bodyParser = express.json();
-const xss = require("xss");
+// const xss = require("xss");
 
 notesRouter
   .route("/")
@@ -15,11 +14,11 @@ notesRouter
       })
       .catch(next);
   })
-  .post(jsonParser, (req,res,next)=>{
-    const {note_name, modified, folder_id, content } =req.body;
+  .post(jsonParser, (req,res,next) => {
+    const {note_name, modified, folder_id, content } = req.body;
     const newNote = { note_name, modified, folder_id, content };
     const knexInstance = req.app.get("db");
-    const requiredFields = {note_name, modified, folder_id, content};
+    const requiredFields = { note_name, modified, folder_id, content };
         // check for missing fields
         const missingFields = Object.entries(requiredFields)
         //item[0] is like key item[1] is like the value
@@ -34,7 +33,6 @@ notesRouter
           })
           .catch(next);
   })
-
 
 notesRouter
   .route("/:id")
@@ -53,11 +51,11 @@ notesRouter
     const { id } = req.params;
     const knexInstance = req.app.get("db");
 
-    NotesService.getNoteById(knexInstance,id)
+    NotesService.getNoteById(knexInstance, id)
     //note is object with id, need to pass to the delete
-      .then(note=>{
+      .then(note => {
         NotesService.deleteNote(knexInstance, note.id)
-          .then((results) => {
+          .then(() => {
             res.status(204).end();
           })
           .catch(next);

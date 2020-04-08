@@ -5,20 +5,21 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require('./config')
 const app = express();
-const folderRouter = require('./folders/folders-router');
-const noteRouter = require('./notes/notes-router');
+const foldersRouter = require("./folders/folders-router");
+const notesRouter = require("./notes/notes-router")
+
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
-});
-//write an express server with endpoints folders and notes
-app.use('/folders', folderRouter); 
-app.use('/notes', noteRouter); 
+// app.get("/", (req, res) => {
+//   res.send("Hello, world!");
+// });
+
+app.use('/folders', foldersRouter);
+app.use('/notes', notesRouter);
 
 app.use((error, req, res, next) => {//eslint-disable-line no-unused-vars
   let message;
