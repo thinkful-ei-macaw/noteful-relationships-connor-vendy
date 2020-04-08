@@ -5,7 +5,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const { NODE_ENV } = require('./config')
 const app = express();
-
+const folderRouter = require('./folders/folders-router');
+const noteRouter = require('./notes/notes-router');
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 app.use(morgan(morganOption));
@@ -15,6 +16,8 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
+app.use('/folders', folderRouter); 
+app.use('/notes', noteRouter); 
 
 app.use((error, req, res, next) => {//eslint-disable-line no-unused-vars
   let message;

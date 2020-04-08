@@ -23,5 +23,5 @@ const FoldersService = {
     }
 }
 
-module.export = FoldersService;
+module.exports = FoldersService;
 
