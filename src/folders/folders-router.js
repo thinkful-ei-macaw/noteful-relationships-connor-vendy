@@ -42,7 +42,7 @@ foldersRouter
     .get((req,res,next)=>{
       const folderId = req.params.id
       const knexInstance = req.app.get("db");
-      FoldersService.getFolderById(knexInstance,folderId)
+      FoldersService.getFolderById(knexInstance, folderId)
         .then(folder=>{
           res.json(folder);
         })

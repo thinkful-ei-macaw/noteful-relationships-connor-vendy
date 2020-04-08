@@ -16,6 +16,7 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
+//write an express server with endpoints folders and notes
 app.use('/folders', folderRouter); 
 app.use('/notes', noteRouter); 
 
