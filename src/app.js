@@ -22,10 +22,10 @@ app.use('/notes', noteRouter);
 
 app.use((error, req, res, next) => {//eslint-disable-line no-unused-vars
   let message;
+  console.error(error);
   if (NODE_ENV === "production") {
     message = { error: { message: "server error" } };
   } else {
-    console.error(error);
     message = { message: error.message, error }
   }
   res.status(500).json(message);

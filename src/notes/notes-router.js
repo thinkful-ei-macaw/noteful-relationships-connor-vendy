@@ -2,8 +2,6 @@ const express = require("express");
 const NotesService = require("./notes-service");
 const jsonParser = express.json();
 const notesRouter = express.Router();
-const bodyParser = express.json();
-const xss = require("xss");
 
 notesRouter
   .route("/")
@@ -16,10 +14,10 @@ notesRouter
       .catch(next);
   })
   .post(jsonParser, (req,res,next)=>{
-    const {note_name, modified, folder_id, content } =req.body;
-    const newNote = { note_name, modified, folder_id, content };
+    const {name, modified, folder_id, content } =req.body;
+    const newNote = { name, modified, folder_id, content };
     const knexInstance = req.app.get("db");
-    const requiredFields = {note_name, modified, folder_id, content};
+    const requiredFields = {name, modified, folder_id, content};
         // check for missing fields
         const missingFields = Object.entries(requiredFields)
         //item[0] is like key item[1] is like the value

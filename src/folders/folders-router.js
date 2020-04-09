@@ -1,11 +1,8 @@
 const express = require("express");
-// const uuid = require("uuid/v4");
-//const logger = require("../logger");
 const FoldersService = require("./folders-service");
 const jsonParser = express.json();
 const foldersRouter = express.Router();
-const bodyParser = express.json();
-const xss = require("xss");
+
 
 foldersRouter
   .route("/")
