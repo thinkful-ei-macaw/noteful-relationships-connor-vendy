@@ -1,5 +1,5 @@
 INSERT INTO folders 
-( folder_name )
+( name )
 VALUES
 ('Spangley'),
 ('Super'),

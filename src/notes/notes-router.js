@@ -15,10 +15,10 @@ notesRouter
       .catch(next);
   })
   .post(jsonParser, (req,res,next) => {
-    const {note_name, modified, folder_id, content } = req.body;
-    const newNote = { note_name, modified, folder_id, content };
+    const { name, folderId: folder_id, modified, content } = req.body;
+    const newNote = { name, folder_id, modified, content };
     const knexInstance = req.app.get("db");
-    const requiredFields = { note_name, modified, folder_id, content };
+    const requiredFields = { name, folder_id, modified, content };
         // check for missing fields
         const missingFields = Object.entries(requiredFields)
         //item[0] is like key item[1] is like the value
@@ -29,36 +29,35 @@ notesRouter
         }
         NotesService.insertNote(knexInstance, newNote)
           .then((note) => {
-            res.status(201).json(note);
+            res.status(201).location(`/notes/${note.id}`).json(note);
           })
           .catch(next);
   })
 
 notesRouter
-  .route("/:id")
-  .get((req, res, next) => {
-    console.log('this is the notesrouter get request');
-    const noteId = req.params.id;
-    console.log(noteId)
-    const knexInstance = req.app.get("db");
-    NotesService.getNoteById(knexInstance, noteId)
+  .route("/:note_id")
+  .all((req, res, next) => {
+    NotesService
+      .getById(req.app.get("db"), req.params.note_id)
       .then((note) => {
-        res.json(note);
+        if (!note) {
+          return res.status(404).json({
+            error: { message: "note does not exist" },
+          });
+        }
+        res.note = note;
+        next();
       })
       .catch(next);
   })
+  .get((req, res, next) => {
+    res.json(res.note);
+  })
   .delete((req, res, next) => {
-    const { id } = req.params;
-    const knexInstance = req.app.get("db");
-
-    NotesService.getNoteById(knexInstance, id)
-    //note is object with id, need to pass to the delete
-      .then(note => {
-        NotesService.deleteNote(knexInstance, note.id)
-          .then(() => {
-            res.status(204).end();
-          })
-          .catch(next);
+    NotesService
+      .deletenote(req.app.get("db"), req.params.note_id)
+      .then((numRowsAffected) => {
+        res.status(204).end();
       })
       .catch(next);
    
