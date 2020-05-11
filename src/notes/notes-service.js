@@ -3,7 +3,7 @@
     return knex.select("*").from("notes");
   },
 
-  insertnote(knex, newFolder) {
+  insertNote(knex, newFolder) {
     return knex
       .insert(newFolder)
       .into("notes")
